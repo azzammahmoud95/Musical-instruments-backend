@@ -1,11 +1,34 @@
-import mysql from 'mysql2/promise';
+import mongoose from "mongoose";
+import dotenv from "dotenv";
+import { MongooseConnect } from "../types";
 
-const connectionDB = mysql.createPool({
-  host: process.env.DB_HOST,
-  user: process.env.DB_USER,
-  password: process.env.DB_PASSWORD,
-  database: process.env.DB_NAME,
-  connectionLimit: 10, // Adjust this according to your needs
+dotenv.config();
+mongoose.set("strictQuery", true);
+
+const connectDB = async (): Promise<void> => {
+  try {
+    await mongoose.connect(
+      process.env.MONGO_URL as string,
+      {
+        useNewUrlParser: true,
+        useUnifiedTopology: true,
+        dbName: process.env.DB_NAME as string,
+      } as MongooseConnect
+    );
+    console.log("Connected to MongoDB");
+  } catch (error) {
+    console.log("Database connection failed. Exiting now...");
+    console.error(error);
+    process.exit(1);
+  }
+};
+
+// Connection error handling
+mongoose.connection.on("disconnected", () => {
+  console.log("MongoDB disconnected!");
+});
+mongoose.connection.on("connected", () => {
+  console.log("MongoDB connected!");
 });
 
-export default connectionDB;
+export default connectDB;
