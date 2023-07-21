@@ -3,20 +3,29 @@ import connectionDB from './config/db';
 import cors from 'cors';
 import dotenv from "dotenv";
 import bodyParser from 'body-parser';
-import ProductRoute from './routes/product-route';
+import productRoute from './routes/product-route';
+import categoryRoute from './routes/category-route'
+
 
 const app = express()
+
+//---------> Enable CORS
 app.use(cors());
 dotenv.config();
 
 app.use(bodyParser.urlencoded({ extended: false }));
 app.use(bodyParser.json());
+
+//---------->Connection to DATEBASE
 connectionDB();
 
 app.get("/", (req, res) => {
   res.send("The server is healthy");
 });
-app.use('/api/product',ProductRoute)
+
+// --------> API Routes 
+app.use('/api/product',productRoute);
+app.use('/api/category',categoryRoute);
 
 const PORT = process.env.PORT || 8000;
 

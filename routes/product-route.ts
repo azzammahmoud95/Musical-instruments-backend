@@ -1,5 +1,4 @@
 import express from 'express' 
-import { ProductInterface } from "../types";
 import { createProduct } from "../controller/product-controller";
 const router = express.Router()
 
