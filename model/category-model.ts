@@ -3,7 +3,7 @@ import { CategoryInterface } from "../types";
 
 const categorySchema = new Schema<CategoryInterface>(
   {
-    name: { type: String },
+    name: { type: String,required:true  },
   },
   { timestamps: true }
 );

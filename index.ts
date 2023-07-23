@@ -4,8 +4,8 @@ import cors from 'cors';
 import dotenv from "dotenv";
 import bodyParser from 'body-parser';
 import productRoute from './routes/product-route';
-import categoryRoute from './routes/category-route'
-
+import categoryRoute from './routes/category-route';
+import userRoute from './routes/user-route';
 
 const app = express()
 
@@ -25,8 +25,8 @@ app.get("/", (req, res) => {
 
 // --------> API Routes 
 app.use('/api/product',productRoute);
+app.use('/api/user',userRoute)
 app.use('/api/category',categoryRoute);
-
 const PORT = process.env.PORT || 8000;
 
 app.listen(PORT, () => {
